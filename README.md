@@ -1,1 +1,0 @@
-# Ichiraku_ramen
