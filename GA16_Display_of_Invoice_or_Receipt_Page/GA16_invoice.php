@@ -1,20 +1,16 @@
 <?php 
-// invoice.php
+
 require_once "config.php"; 
 require_once "functions.php"; 
 session_start();
 
-// -------------------------------------------------------------
-// 1. Get order_id from URL
-// -------------------------------------------------------------
+
 if (!isset($_GET['order_id'])) {
     die("No order ID provided.");
 }
 $order_id = $_GET['order_id'];
 
-// -------------------------------------------------------------
-// 2. Load order record
-// -------------------------------------------------------------
+
 $stmt = $conn->prepare("
     SELECT o.order_id, o.customer_id, o.order_date, o.total_amount,
            c.customer_name, c.customer_address, c.contact_number
@@ -29,15 +25,13 @@ $order = $stmt->get_result()->fetch_assoc();
 
 if (!$order) { die("Order not found."); }
 
-// Format date & time
+
 $datetime = new DateTime($order['order_date']);
 $formatted_date = $datetime->format("m/d/Y");
 $formatted_time = $datetime->format("h:i A");
 
 
-// -------------------------------------------------------------
-// 3. Load order items
-// -------------------------------------------------------------
+
 $stmt2 = $conn->prepare("
     SELECT od.quantity, od.price_each, 
            p.product_name
@@ -50,9 +44,7 @@ $stmt2->execute();
 $items = $stmt2->get_result();
 
 
-// -------------------------------------------------------------
-// 4. Compute totals
-// -------------------------------------------------------------
+
 $subtotal = 0;
 foreach ($items as $i) {
     $subtotal += ($i['price_each'] * $i['quantity']);
@@ -62,9 +54,7 @@ $delivery_fee = 50.00;
 $grand_total = $subtotal + $tax + $delivery_fee;
 
 
-// -------------------------------------------------------------
-// 5. Begin HTML (Your exact design preserved)
-// -------------------------------------------------------------
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -73,15 +63,14 @@ $grand_total = $subtotal + $tax + $delivery_fee;
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Invoice</title>
 
-  <!-- Fonts & Icons EXACTLY as you made them -->
+  
   <link href="https://fonts.googleapis.com/css2?family=Nanum+Brush+Script&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
   <style>
 <?php
-// ✔ Include your entire CSS exactly as in your original Invoice.html
-// I am copying it EXACTLY, no edits at all
+
 ?>
     body {
         font-family: 'Poppins', sans-serif;
@@ -157,7 +146,7 @@ $grand_total = $subtotal + $tax + $delivery_fee;
 <div id="invoice-overlay">
     <div class="invoice-box">
 
-        <!-- HEADER -->
+        
         <div class="invoice-header">
             <div class="inv-logo">
                 <i class="fa-solid fa-bowl-food"></i>
@@ -171,7 +160,7 @@ $grand_total = $subtotal + $tax + $delivery_fee;
 
         <div class="invoice-body">
 
-            <!-- Customer + Order Info -->
+          
             <div class="inv-info-row">
                 <div class="inv-info-box">
                     <h4>Billed To</h4>
@@ -191,7 +180,7 @@ $grand_total = $subtotal + $tax + $delivery_fee;
                 </div>
             </div>
 
-            <!-- ITEMS TABLE -->
+           
             <div class="inv-table-wrapper">
                 <table class="inv-table">
                     <thead>
@@ -221,7 +210,7 @@ $grand_total = $subtotal + $tax + $delivery_fee;
                 </table>
             </div>
 
-            <!-- TOTALS -->
+          
             <div class="inv-footer">
                 <div class="inv-msg">
                     Thank you for dining with Ichiraku Ramen!<br>
@@ -247,7 +236,7 @@ $grand_total = $subtotal + $tax + $delivery_fee;
                 </div>
             </div>
 
-            <!-- ACTION BUTTONS -->
+         
             <div class="inv-actions">
                 <button class="btn-inv-print" onclick="window.print()">
                     <i class="fa-solid fa-print"></i> Print Receipt
