@@ -1,5 +1,5 @@
 <?php
-// order_summary.php (view mode)
+
 require_once 'functions.php';
 require_login();
 
