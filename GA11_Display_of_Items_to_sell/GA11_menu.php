@@ -1,5 +1,5 @@
 <?php
-// menu.php
+
 require_once 'functions.php';
 require_login();
 
