@@ -1,8 +1,9 @@
 Web Browser Search:
-http://localhost/ichiraku_final/customer_index.php
+http://localhost/ichiraku_final/
 
 Accounts:
 1. Naruto@gmail.com
    123456ok
 2. admin@ichiraku.com
    admin123
+
